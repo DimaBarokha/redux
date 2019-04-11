@@ -1,28 +1,32 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import {connect} from "react-redux";
+import { User } from './components/User'
+import { Page } from './components/Page'
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+        const {user, page} = this.props;
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <h1 className="app-title">
+                        Мой топ фото
+                    </h1>
+                </header>
+                <User name={user.name}/>
+                <Page year={page.year} photos={page.photos}/>
+            </div>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = store => {
+    console.log(store) // посмотрим, что же у нас в store?
+    return {
+        user: store.user,
+        page: store.page,
+    }
+}
+export default connect(mapStateToProps)(App)
+
